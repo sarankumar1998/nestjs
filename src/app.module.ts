@@ -12,7 +12,6 @@ import { PostData } from './Entities/post.Entity';
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true, envFilePath: '.env' }),
-
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
       useFactory: (cfg: ConfigService) => {
@@ -27,9 +26,9 @@ import { PostData } from './Entities/post.Entity';
           synchronize: true,
         };
       },
-
       inject: [ConfigService],
     }),
+
 
     AuthModule,
     PostModule,
