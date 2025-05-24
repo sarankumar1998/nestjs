@@ -2,11 +2,6 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { ValidationPipe } from '@nestjs/common';
-import { webcrypto } from 'crypto'; // ✅ correct way
-
-if (!globalThis.crypto) {
-  (globalThis as any).crypto = webcrypto;
-}
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -22,6 +17,6 @@ async function bootstrap() {
   SwaggerModule.setup('api', app, document);
 
   app.useGlobalPipes(new ValidationPipe());
-  await app.listen(process.env.PORT ?? 3000, '0.0.0.0');
+  await app.listen(process.env.PORT ?? 3000);
 }
 bootstrap();

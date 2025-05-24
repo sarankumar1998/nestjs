@@ -44,4 +44,19 @@ export class PostService {
   return { message: 'Post deleted successfully' };
 }
 
+async editPost(postId: string, title: string, content: string) {
+  const post = await this.postRepo.findOne({ where: { id: postId }, relations: ['user'] });
+
+  if (!post) {
+    throw new Error('Post not found');
+  }
+
+  post.title = title;
+  post.content = content;
+
+  await this.postRepo.save(post);
+
+  return { message: 'Post updated successfully' };
+}
+
 }

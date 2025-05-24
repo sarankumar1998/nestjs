@@ -1,4 +1,4 @@
-import { Controller, Post, Body, Param, Get, Delete } from '@nestjs/common';
+import { Controller, Post, Body, Param, Get, Delete, Put } from '@nestjs/common';
 import { PostService } from './postFeed.service';
 import { ApiTags, ApiBody, ApiParam } from '@nestjs/swagger';
 import { CreatePostDto } from './DTO/create-post.dto';
@@ -21,14 +21,25 @@ export class PostController {
   }
 
   @Get(':userId')
-  @ApiParam({ name: 'userId', description: 'User UUID' })
+  // @ApiParam({ name: 'userId', description: 'User UUID' })
   getUserPosts(@Param('userId') userId: string) {
     return this.postService.findUserPosts(userId);
   }
   @Delete(':postId')
-  @ApiParam({ name: 'postId', type: 'string', description: 'UUID of the post' })
+  // @ApiParam({ name: 'postId', type: 'string', description: 'UUID of the post' })
   deletePost(@Param('postId') postId: string) {
     return this.postService.deletePost(postId);
   }
+
+@Put(':postId')
+@ApiBody({ type: CreatePostDto })
+editPost(
+  @Param('postId') postId: string,
+  @Body() body: CreatePostDto
+) {
+  return this.postService.editPost(postId, body.title, body.content);
+}
+
+
 
 }
